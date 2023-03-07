@@ -8,6 +8,7 @@ import torch
 import fire
 import time
 import json
+from tqdm import tqdm
 
 from pathlib import Path
 
@@ -89,23 +90,31 @@ def main(
 情感：负面
 ###
 豆瓣评论："""
+    acc, counter = 0, 0
     prompts = []
-    for l in lines[1:64]:
+    for l in lines[1:]:
         label, text = l.strip().split('\t')
         label_text = "正面" if label == '1' else "负面"
         prompts.append(prompt+text[:128]+'\n'+"情感：")
 
 
-    for i in range(0, len(prompts), 32):
-        if (len(prompts[i*32:(i+1)*32])) == 0:
+    for i in tqdm(range(0, len(prompts), 32)):
+        if (len(prompts[i:i+32])) == 0:
             break
         results = generator.generate(
             prompts[i*32:(i+1)*32], max_gen_len=512, temperature=temperature, top_p=top_p
         )
 
-        for r in results:
+        for j, r in enumerate(results):
             answer = r.split('###')[2].strip().split('\n')[1].split('：')[1]
             print(answer)
+            label = lines[i + j].strip().split('\t')[0]
+            label_text = "正面" if label == '1' else "负面"
+            if label_text == answer:
+                acc += 1
+            counter += 1
+
+    print(acc, counter)
 
 
 
