@@ -88,25 +88,13 @@ def main(
 豆瓣评论：看了个开头，完全没有看下去的欲望。
 情感：负面
 ###
-豆瓣评论：
-"""
+豆瓣评论："""
     prompts = []
     for l in lines[1:30]:
         label, text = l.strip().split('\t')
         label_text = "正面" if label == '1' else "负面"
-        prompts.append(prompt+text+'\n'+"情感：")
+        prompts.append(prompt+text[:64]+'\n'+"情感：")
 
-    print(prompts[0])
-
-    prompts=["""豆瓣评论：加油，赶紧创作出剧本吧。
-情感：正面
-###
-豆瓣评论：看了个开头，完全没有看下去的欲望。
-情感：负面
-###
-豆瓣评论：
-怎么说呢，“这已经不是文学了，而是改造
-情感："""]
 
     results = generator.generate(
         prompts, max_gen_len=512, temperature=temperature, top_p=top_p
@@ -114,7 +102,7 @@ def main(
 
     for i, result in enumerate(results):
         print(result)
-        #print(lines[i + 1])
+        print(lines[i + 1])
     print("\n==================================\n")
 
 
