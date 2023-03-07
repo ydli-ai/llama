@@ -99,7 +99,7 @@ def main(
     print(prompts[0])
 
     results = generator.generate(
-        prompts, max_gen_len=256, temperature=temperature, top_p=top_p
+        prompts, max_gen_len=512, temperature=temperature, top_p=top_p
     )
 
     for i, result in enumerate(results):
