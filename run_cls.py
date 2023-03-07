@@ -90,20 +90,21 @@ def main(
 ###
 豆瓣评论："""
     prompts = []
-    for l in lines[1:30]:
+    for l in lines[1:64]:
         label, text = l.strip().split('\t')
         label_text = "正面" if label == '1' else "负面"
-        prompts.append(prompt+text[:64]+'\n'+"情感：")
+        prompts.append(prompt+text[:128]+'\n'+"情感：")
 
 
-    results = generator.generate(
-        prompts, max_gen_len=512, temperature=temperature, top_p=top_p
-    )
+    for i in range(0, len(prompts), 32):
+        results = generator.generate(
+            prompts[i*32:(i+1)*32], max_gen_len=512, temperature=temperature, top_p=top_p
+        )
 
-    for i, result in enumerate(results):
-        print(result)
-        print(lines[i + 1])
-    print("\n==================================\n")
+        for r in results:
+            answer = r.split('###')[2].strip().split('\n')[1].split('：')[1]
+            print(answer)
+
 
 
 if __name__ == "__main__":
