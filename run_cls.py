@@ -98,13 +98,23 @@ def main(
 
     print(prompts[0])
 
+    prompts=["""Translate English to French:
+
+    sea otter => loutre de mer
+
+    peppermint => menthe poivrée
+
+    plush girafe => girafe peluche
+
+    cheese =>"""]
+
     results = generator.generate(
         prompts, max_gen_len=512, temperature=temperature, top_p=top_p
     )
 
     for i, result in enumerate(results):
         print(result)
-        print(lines[i + 1])
+        #print(lines[i + 1])
     print("\n==================================\n")
 
 
