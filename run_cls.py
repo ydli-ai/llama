@@ -91,7 +91,7 @@ def main(
 豆瓣评论：
 """
     prompts = []
-    for l in lines[1:50]:
+    for l in lines[1:30]:
         label, text = l.strip().split('\t')
         label_text = "正面" if label == '1' else "负面"
         prompts.append(prompt+text+'\n'+"情感：")
