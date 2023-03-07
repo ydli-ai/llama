@@ -97,7 +97,8 @@ def main(
 
 
     for i in range(0, len(prompts), 32):
-        print(len(prompts[i*32:(i+1)*32]))
+        if (len(prompts[i*32:(i+1)*32])) == 0:
+            break
         results = generator.generate(
             prompts[i*32:(i+1)*32], max_gen_len=512, temperature=temperature, top_p=top_p
         )
