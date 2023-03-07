@@ -96,6 +96,8 @@ def main(
         label_text = "正面" if label == '1' else "负面"
         prompts.append(prompt+text+'\n'+"情感：")
 
+    print(prompts[0])
+
     results = generator.generate(
         prompts, max_gen_len=256, temperature=temperature, top_p=top_p
     )
