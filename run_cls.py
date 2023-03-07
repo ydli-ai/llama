@@ -97,7 +97,7 @@ def main(
         prompts.append(prompt+text+'\n'+"情感：")
 
     results = generator.generate(
-        prompts, max_gen_len=128, temperature=temperature, top_p=top_p
+        prompts, max_gen_len=256, temperature=temperature, top_p=top_p
     )
 
     for i, result in enumerate(results):
